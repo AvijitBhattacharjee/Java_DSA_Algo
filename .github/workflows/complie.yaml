@@ -1,0 +1,38 @@
+name: Compile and Execute Java Classes
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 19 * * *'    
+
+jobs:
+  Execution_Java:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+
+      - name: Build with javac
+        run: |
+          javac -version
+          java --version
+
+      - name: Compile Java Classes
+        run: |
+          javac src/main/java/Typecasting.java
+
+      - name: Execute Java Classes
+        run: |
+          cd src/main/java/
+          java Typecasting    
